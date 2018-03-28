@@ -8,26 +8,30 @@
 
 import UIKit
 
+enum DirectionHeight: Int {
+    case Open = -500
+    case Close = 500
+}
+
 class ViewController: UIViewController {
     @IBOutlet weak var myView: UIView!
-    var height: CGFloat!
     
     @IBAction func close(_ sender: Any) {
-        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.0, options: [], animations: {
-            self.myView.frame.origin.y += self.height
-        })
+        toggleAnimation(DirectionHeight.Close.rawValue)
     }
     
-    
-    @IBAction func buttonTapped(_ sender: Any) {
-        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.0, options: [], animations: {
-            self.myView.frame.origin.y -= self.height
-        })
+    @IBAction func open(_ sender: Any) {
+        toggleAnimation(DirectionHeight.Open.rawValue)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        height = myView.bounds.height - 100
+    }
+    
+    func toggleAnimation(_ directionHeight: Int) {
+        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.0, options: [], animations: {
+            self.myView.frame.origin.y += CGFloat(directionHeight)
+        })
     }
 }
 
